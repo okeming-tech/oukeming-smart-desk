@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>欧科明 - 预防近视家用智慧书桌 | 保护眼睛从娃娃抓起</title>
+<style>
+  :root {
+    --green: #2e8b57;
+    --green-dark: #1a6b3c;
+    --green-light: #e8f5e9;
+    --green-accent: #43a047;
+    --white: #ffffff;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    --radius: 16px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.1);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+    --shadow-xl: 0 16px 48px rgba(0,0,0,0.15);
+    --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    color: var(--gray-800);
+    background: var(--white);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ===== Navigation ===== */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    transition: var(--transition);
+    padding: 0 2rem;
+  }
+  .nav.scrolled { box-shadow: var(--shadow-sm); }
+  .nav-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 1.25rem; font-weight: 700; color: var(--green-dark);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--gray-800); font-weight: 400; font-size: 0.9rem; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--gray-600); text-decoration: none; font-size: 0.9rem;
+    font-weight: 500; transition: var(--transition); position: relative;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--green); }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 2px; background: var(--green);
+    transition: var(--transition);
+  }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    background: var(--green); color: white; border: none;
+    padding: 0.5rem 1.25rem; border-radius: 999px; font-size: 0.85rem;
+    font-weight: 600; cursor: pointer; transition: var(--transition);
+    text-decoration: none; display: inline-block;
+  }
+  .nav-cta:hover { background: var(--green-dark); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+  /* ===== Hero Section ===== */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center;
+    background: linear-gradient(160deg, #f0fdf4 0%, #e8f5e9 30%, #ffffff 70%, #f1f8f4 100%);
+    padding: 6rem 2rem 4rem; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -200px; right: -150px;
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(46,139,87,0.06) 0%, transparent 70%);
+  }
+  .hero::after {
+    content: ''; position: absolute; bottom: -100px; left: -100px;
+    width: 400px; height: 400px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(46,139,87,0.04) 0%, transparent 70%);
+  }
+  .hero-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+    align-items: center; position: relative; z-index: 1; width: 100%;
+  }
+  .hero-tag {
+    display: inline-block; background: rgba(46,139,87,0.12); color: var(--green-dark);
+    padding: 0.35rem 1rem; border-radius: 999px; font-size: 0.85rem;
+    font-weight: 600; margin-bottom: 1.25rem; letter-spacing: 0.5px;
+  }
+  .hero h1 {
+    font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 800;
+    color: var(--gray-900); line-height: 1.15; margin-bottom: 1rem;
+  }
+  .hero h1 em {
+    font-style: normal; color: var(--green);
+    background: linear-gradient(135deg, var(--green), #1b5e20);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-subtitle {
+    font-size: 1.15rem; color: var(--gray-600); margin-bottom: 2rem;
+    max-width: 480px; line-height: 1.8;
+  }
+  .hero-badges { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .hero-badge {
+    display: flex; align-items: center; gap: 0.4rem;
+    background: white; padding: 0.45rem 0.9rem; border-radius: 999px;
+    font-size: 0.8rem; font-weight: 600; color: var(--gray-700);
+    box-shadow: var(--shadow-sm); border: 1px solid var(--gray-200);
+  }
+  .hero-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green-accent); }
+  .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--green); color: white; border: none;
+    padding: 0.85rem 2rem; border-radius: 999px; font-size: 1rem;
+    font-weight: 600; cursor: pointer; transition: var(--transition);
+    text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;
+    box-shadow: 0 4px 16px rgba(46,139,87,0.3);
+  }
+  .btn-primary:hover { background: var(--green-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(46,139,87,0.4); }
+  .btn-outline {
+    background: white; color: var(--green); border: 2px solid var(--green);
+    padding: 0.85rem 2rem; border-radius: 999px; font-size: 1rem;
+    font-weight: 600; cursor: pointer; transition: var(--transition);
+    text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .btn-outline:hover { background: var(--green-light); transform: translateY(-2px); }
+  .hero-image {
+    position: relative; display: flex; justify-content: center; align-items: center;
+  }
+  .hero-image img {
+    width: 100%; max-width: 600px; border-radius: var(--radius);
+    box-shadow: var(--shadow-xl); transition: var(--transition);
+  }
+  .hero-image img:hover { transform: translateY(-4px); box-shadow: 0 24px 56px rgba(0,0,0,0.18); }
+
+  /* ===== Section Common ===== */
+  .section { padding: 5rem 2rem; }
+  .section-alt { background: var(--gray-50); }
+  .section-inner { max-width: 1280px; margin: 0 auto; }
+  .section-label {
+    display: inline-block; color: var(--green); font-weight: 700; font-size: 0.85rem;
+    letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 800;
+    color: var(--gray-900); margin-bottom: 1rem; line-height: 1.3;
+  }
+  .section-desc {
+    font-size: 1.05rem; color: var(--gray-600); max-width: 640px;
+    margin-bottom: 3rem; line-height: 1.8;
+  }
+  .text-center { text-align: center; }
+  .mx-auto { margin-left: auto; margin-right: auto; }
+
+  /* ===== Features Grid ===== */
+  .features-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+  .feature-card {
+    background: white; border-radius: var(--radius); padding: 2rem 1.75rem;
+    box-shadow: var(--shadow-sm); border: 1px solid var(--gray-200);
+    transition: var(--transition); position: relative; overflow: hidden;
+  }
+  .feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--green);
+  }
+  .feature-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 3px; background: linear-gradient(90deg, var(--green), var(--green-accent));
+    transform: scaleX(0); transition: var(--transition);
+  }
+  .feature-card:hover::before { transform: scaleX(1); }
+  .feature-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: var(--green-light); display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.25rem; font-size: 1.5rem; color: var(--green);
+    transition: var(--transition);
+  }
+  .feature-card:hover .feature-icon { background: var(--green); color: white; }
+  .feature-card h3 { font-size: 1.1rem; font-weight: 700; color: var(--gray-900); margin-bottom: 0.6rem; }
+  .feature-card p { font-size: 0.92rem; color: var(--gray-600); line-height: 1.7; }
+
+  /* ===== Stats Bar ===== */
+  .stats-bar {
+    background: linear-gradient(135deg, var(--green-dark), var(--green));
+    padding: 3rem 2rem; color: white;
+  }
+  .stats-grid {
+    max-width: 1280px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 2rem; text-align: center;
+  }
+  .stat-item .stat-number { font-size: 2.2rem; font-weight: 800; line-height: 1.2; }
+  .stat-item .stat-label { font-size: 0.9rem; opacity: 0.85; margin-top: 0.25rem; }
+
+  /* ===== Specs Table ===== */
+  .specs-wrapper {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 2rem;
+  }
+  .specs-group {
+    background: white; border-radius: var(--radius); overflow: hidden;
+    box-shadow: var(--shadow-sm); border: 1px solid var(--gray-200);
+  }
+  .specs-group-header {
+    background: var(--green); color: white; padding: 1rem 1.5rem;
+    font-weight: 700; font-size: 1rem; display: flex; align-items: center; gap: 0.6rem;
+  }
+  .specs-table { width: 100%; border-collapse: collapse; }
+  .specs-table td {
+    padding: 0.8rem 1.5rem; font-size: 0.9rem;
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .specs-table tr:last-child td { border-bottom: none; }
+  .specs-table td:first-child { color: var(--gray-600); width: 40%; font-weight: 500; }
+  .specs-table td:last-child { color: var(--gray-800); font-weight: 600; }
+
+  /* ===== Gallery ===== */
+  .gallery-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .gallery-item {
+    border-radius: var(--radius); overflow: hidden;
+    box-shadow: var(--shadow-md); transition: var(--transition);
+    cursor: pointer; position: relative; aspect-ratio: 4/3;
+  }
+  .gallery-item:hover { transform: translateY(-4px); box-shadow: var(--shadow-xl); }
+  .gallery-item img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .gallery-item:hover img { transform: scale(1.05); }
+
+  /* ===== CTA Section ===== */
+  .cta {
+    background: linear-gradient(160deg, #f0fdf4, #e8f5e9, #f1f8f4);
+    text-align: center; padding: 5rem 2rem;
+  }
+  .cta-card {
+    max-width: 700px; margin: 0 auto;
+    background: white; border-radius: var(--radius); padding: 3rem 2rem;
+    box-shadow: var(--shadow-lg);
+  }
+  .cta-card h2 { font-size: 1.8rem; font-weight: 800; color: var(--gray-900); margin-bottom: 0.75rem; }
+  .cta-card p { color: var(--gray-600); margin-bottom: 1.5rem; font-size: 1rem; }
+  .cta-contact {
+    display: flex; align-items: center; justify-content: center; gap: 1rem;
+    flex-wrap: wrap; margin-top: 1.5rem;
+  }
+  .cta-phone {
+    background: var(--green-light); padding: 0.75rem 2rem; border-radius: 999px;
+    font-weight: 700; color: var(--green-dark); font-size: 1.1rem;
+    text-decoration: none; transition: var(--transition);
+  }
+  .cta-phone:hover { background: var(--green); color: white; }
+
+  /* ===== Footer ===== */
+  .footer {
+    background: var(--gray-900); color: var(--gray-300); padding: 3rem 2rem 1.5rem;
+  }
+  .footer-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr;
+    gap: 3rem;
+  }
+  .footer-brand h3 { color: white; font-size: 1.2rem; margin-bottom: 0.75rem; }
+  .footer-brand p { font-size: 0.85rem; line-height: 1.7; }
+  .footer-col h4 { color: white; font-size: 0.9rem; margin-bottom: 1rem; }
+  .footer-col a { display: block; color: var(--gray-300); text-decoration: none; font-size: 0.85rem; padding: 0.3rem 0; transition: var(--transition); }
+  .footer-col a:hover { color: var(--green-accent); }
+  .footer-bottom {
+    max-width: 1280px; margin: 2rem auto 0; padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    text-align: center; font-size: 0.8rem; color: var(--gray-600);
+  }
+
+  /* ===== Mobile Nav Toggle ===== */
+  .nav-toggle {
+    display: none; background: none; border: none; cursor: pointer;
+    padding: 0.5rem; color: var(--gray-800);
+  }
+  .nav-toggle svg { width: 24px; height: 24px; }
+
+  /* ===== Animations ===== */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate { animation: fadeInUp 0.6s ease forwards; }
+  .animate-delay-1 { animation-delay: 0.1s; opacity: 0; }
+  .animate-delay-2 { animation-delay: 0.2s; opacity: 0; }
+  .animate-delay-3 { animation-delay: 0.3s; opacity: 0; }
+  .animate-delay-4 { animation-delay: 0.4s; opacity: 0; }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 1024px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; text-align: center; }
+    .hero-subtitle { margin-left: auto; margin-right: auto; }
+    .hero-badges { justify-content: center; }
+    .hero-buttons { justify-content: center; }
+    .hero { padding-top: 5rem; min-height: auto; }
+    .hero-image { order: -1; }
+    .hero-image img { max-width: 420px; }
+  }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .nav-links.open {
+      display: flex; flex-direction: column; position: absolute;
+      top: 64px; left: 0; right: 0; background: white;
+      padding: 1rem 2rem; border-bottom: 1px solid var(--gray-200);
+      box-shadow: var(--shadow-lg); gap: 0.75rem;
+    }
+    .nav-toggle { display: block; }
+    .footer-inner { grid-template-columns: 1fr; gap: 1.5rem; }
+    .section { padding: 3rem 1.25rem; }
+    .hero { padding: 5rem 1.25rem 2rem; }
+    .hero h1 { font-size: 1.8rem; }
+    .features-grid { grid-template-columns: 1fr; }
+    .specs-wrapper { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-buttons { flex-direction: column; }
+    .btn-primary, .btn-outline { justify-content: center; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* Lightbox */
+  .lightbox {
+    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 2000; background: rgba(0,0,0,0.9); align-items: center; justify-content: center;
+    cursor: pointer;
+  }
+  .lightbox.active { display: flex; }
+  .lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 8px; }
+  .lightbox-close {
+    position: absolute; top: 1.5rem; right: 1.5rem; color: white;
+    font-size: 2rem; cursor: pointer; z-index: 2001; background: none; border: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">欧科明 <span>| 智能护眼学习桌</span></a>
+    <button class="nav-toggle" id="navToggle" aria-label="菜单">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#features">核心功能</a></li>
+      <li><a href="#specs">产品参数</a></li>
+      <li><a href="#gallery">产品图集</a></li>
+      <li><a href="#cta">联系我们</a></li>
+    </ul>
+    <a href="#cta" class="nav-cta">立即咨询</a>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <span class="hero-tag animate animate-delay-1">新一代全场景智能护眼学习装备</span>
+      <h1 class="animate animate-delay-2">欧科明<em>预防近视</em><br>家用智慧书桌</h1>
+      <p class="hero-subtitle animate animate-delay-3">
+        专为6-18岁中小学生打造。融合全光谱护眼照明、AI坐姿监测、双电机智能升降三大核心技术，
+        从光源本质、用眼姿态、学习空间三个维度构建全方位护眼体系。
+      </p>
+      <div class="hero-badges animate animate-delay-3">
+        <span class="hero-badge"><span class="dot"></span>RG0无蓝光危害</span>
+        <span class="hero-badge"><span class="dot"></span>0频闪发明专利</span>
+        <span class="hero-badge"><span class="dot"></span>AI坐姿监测</span>
+        <span class="hero-badge"><span class="dot"></span>ENF级环保</span>
+      </div>
+      <div class="hero-buttons animate animate-delay-4">
+        <a href="#features" class="btn-primary">探索功能</a>
+        <a href="#specs" class="btn-outline">查看参数</a>
+      </div>
+    </div>
+    <div class="hero-image animate animate-delay-2">
+      <img src="一张图了解书桌.jpg" alt="欧科明预防近视家用智慧书桌">
+    </div>
+  </div>
+</section>
+
+<!-- Stats Bar -->
+<section class="stats-bar">
+  <div class="stats-grid">
+    <div class="stat-item"><div class="stat-number">6TOPS</div><div class="stat-label">本地AI算力</div></div>
+    <div class="stat-item"><div class="stat-number">0频闪</div><div class="stat-label">发明专利技术</div></div>
+    <div class="stat-item"><div class="stat-number">RG0</div><div class="stat-label">无蓝光危害等级</div></div>
+    <div class="stat-item"><div class="stat-number">UGR&lt;10</div><div class="stat-label">极致防眩光值</div></div>
+    <div class="stat-item"><div class="stat-number">ENF级</div><div class="stat-label">香杉木环保板材</div></div>
+    <div class="stat-item"><div class="stat-number">5年</div><div class="stat-label">核心部件质保</div></div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="section" id="features">
+  <div class="section-inner">
+    <div class="section-label">核心优势</div>
+    <h2 class="section-title">八大护眼科技，守护孩子视力健康</h2>
+    <p class="section-desc">
+      从光源、坐姿、空间三个维度构建全方位护眼体系，让每一次学习都健康舒适。
+    </p>
+    <div class="features-grid">
+      <!-- Feature 1 -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </div>
+        <h3>媲美上午10点自然光</h3>
+        <p>采用低有害蓝光、高有益红光的类太阳光谱灯珠（发明专利），无有害光谱尖峰。还原真实色彩，减少色差带来的视觉疲劳，保护孩子色觉发育。</p>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <h3>保护视网膜神经健康</h3>
+        <p>恒压恒流控制方案实现0频闪（发明专利），彻底消除频闪光污染。避免瞳孔反复收缩、睫状肌持续调焦，告别视网膜高频刺激，减少近视加深风险。</p>
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <h3>减少近视诱因</h3>
+        <p>纳米光学材料，眩光值实测低至UGR9.7，直视不刺眼（创新应用）。降低发光面与背景亮度差，避免瞳孔骤缩骤张，防止视网膜感光细胞超负荷工作。</p>
+      </div>
+
+      <!-- Feature 4 -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        </div>
+        <h3>AI坐姿监测 · 预防近视加深</h3>
+        <p>自研坐姿AI神经网络模型，6TOPS本地算力，经10万张图片训练。精准识别低头、歪头、趴桌、脊椎变形等不良坐姿并实时语音提醒。本地运行保护隐私。</p>
+      </div>
+
+      <!-- Feature 5 -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+        </div>
+        <h3>培养护眼坐姿</h3>
+        <p>590-940mm电动升降，适配幼儿园至初中全阶段身高。0-40°翻转台面，免配矫正器，科学矫正坐姿，始终保持健康读写距离。</p>
+      </div>
+
+      <!-- Feature 6 -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        </div>
+        <h3>6层分区收纳系统</h3>
+        <p>从孩子学习场景出发设计6层分区收纳空间。5层书柜、双抽屉（带缓冲滑轨及自动回弹）、洞洞板、隐藏式平板支架，帮助孩子养成良好收纳习惯。</p>
+      </div>
+
+      <!-- Feature 7 -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>多重安全防护</h3>
+        <p>自研双电机四腿同步升降结构，运行平稳无晃动。配备8档遇阻回弹及陀螺仪防倾倒识别，童锁保护，给孩子用的安心、家长放心。</p>
+      </div>
+
+      <!-- Feature 8 -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </div>
+        <h3>离线语音 + 触屏双控</h3>
+        <p>自研离线语音+触摸屏双控，无需联网，孩子一学就会。支持0-100级精细调光，总能找到最舒适的光线亮度。在线语音支持学习辅导与智能陪伴。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Specs Section -->
+<section class="section section-alt" id="specs">
+  <div class="section-inner">
+    <div class="text-center">
+      <span class="section-label">技术规格</span>
+      <h2 class="section-title">产品参数一览</h2>
+      <p class="section-desc mx-auto">型号 BSJ-S-001，严格符合多项国家标准，品质与安全双重保障。</p>
+    </div>
+    <div class="specs-wrapper">
+      <!-- Optical -->
+      <div class="specs-group">
+        <div class="specs-group-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/></svg>
+          光学参数
+        </div>
+        <table class="specs-table">
+          <tr><td>灯体尺寸</td><td>1200mm × 300mm</td></tr>
+          <tr><td>总功率</td><td>130W（下灯70W / 上灯60W）</td></tr>
+          <tr><td>光源</td><td>全光谱灯珠（发明专利）</td></tr>
+          <tr><td>色温</td><td>3900K - 4100K</td></tr>
+          <tr><td>显色指数</td><td>Ra &gt; 97</td></tr>
+          <tr><td>中心照度</td><td>≥1500lx，均匀度≥0.94</td></tr>
+          <tr><td>频闪</td><td>0.000%，风险等级：无影响</td></tr>
+          <tr><td>光生物安全</td><td>RG0 无蓝光危害</td></tr>
+          <tr><td>眩光值</td><td>UGR ≤ 10（直视不刺眼）</td></tr>
+          <tr><td>面板材质</td><td>纳米防眩材料 + PC微晶板</td></tr>
+          <tr><td>散热系统</td><td>航空6061铝型材散热鳍片（2kg）</td></tr>
+          <tr><td>使用寿命</td><td>≥50000小时，5年光衰≤15%</td></tr>
+        </table>
+      </div>
+
+      <!-- Structure -->
+      <div class="specs-group">
+        <div class="specs-group-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/></svg>
+          结构 &amp; 材质参数
+        </div>
+        <table class="specs-table">
+          <tr><td>环保等级</td><td>ENF级（芯材：南洋楹木）</td></tr>
+          <tr><td>表面工艺</td><td>肤感漆</td></tr>
+          <tr><td>台面功能</td><td>0-40°可翻转，任意角度悬停</td></tr>
+          <tr><td>收纳系统</td><td>5层书柜 + 双抽屉 + 洞洞板</td></tr>
+          <tr><td>整体尺寸</td><td>1200×700×1650-1950mm</td></tr>
+          <tr><td>桌面尺寸</td><td>1200mm × 700mm</td></tr>
+          <tr><td>净重</td><td>约 75kg</td></tr>
+          <tr><td>桌面最大承重</td><td>80kg</td></tr>
+        </table>
+      </div>
+
+      <!-- Lift System -->
+      <div class="specs-group">
+        <div class="specs-group-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+          升降系统参数
+        </div>
+        <table class="specs-table">
+          <tr><td>电机</td><td>24V 80W 双电机</td></tr>
+          <tr><td>结构</td><td>四腿同步升降丝杆</td></tr>
+          <tr><td>调节高度</td><td>590mm - 940mm</td></tr>
+          <tr><td>升降速度</td><td>12mm/s</td></tr>
+          <tr><td>安全功能</td><td>陀螺仪防倾倒 / 8档遇阻回弹 / 童锁</td></tr>
+          <tr><td>控制方式</td><td>手控器按键 / APP蓝牙控制</td></tr>
+          <tr><td>记忆功能</td><td>3档自定义高度记忆</td></tr>
+        </table>
+      </div>
+
+      <!-- Electrical & Certification -->
+      <div class="specs-group">
+        <div class="specs-group-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          电气参数 &amp; 认证标准
+        </div>
+        <table class="specs-table">
+          <tr><td>额定电压</td><td>AC 100-240V 50/60Hz</td></tr>
+          <tr><td>额定电流</td><td>MAX 1A</td></tr>
+          <tr><td>输出</td><td>恒压48V MAX 3.125A</td></tr>
+          <tr><td>待机功耗</td><td>≤0.5W</td></tr>
+          <tr><td>电源线长度</td><td>2.5m</td></tr>
+          <tr><td style="padding-top:1rem;border-top:2px solid var(--gray-200)">执行标准</td><td style="padding-top:1rem;border-top:2px solid var(--gray-200)">GB/T 28007-2011</td></tr>
+          <tr><td></td><td>GB/T 9473-2022</td></tr>
+          <tr><td></td><td>GB 7000.1-2015</td></tr>
+          <tr><td></td><td>GB 4943.1-2022</td></tr>
+          <tr><td>质保</td><td>整机2年 / 核心部件5年</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery Section -->
+<section class="section" id="gallery">
+  <div class="section-inner">
+    <div class="text-center">
+      <span class="section-label">产品图集</span>
+      <h2 class="section-title">多场景展示</h2>
+      <p class="section-desc mx-auto">点击图片可放大查看</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item" onclick="openLightbox('一张图了解书桌.jpg')">
+        <img src="一张图了解书桌.jpg" alt="欧科明智慧书桌 - 产品宣传图" loading="lazy">
+      </div>
+      <div class="gallery-item" onclick="openLightbox('抠图 (1).png')">
+        <img src="抠图 (1).png" alt="欧科明智慧书桌 - 侧面展示" loading="lazy">
+      </div>
+      <div class="gallery-item" onclick="openLightbox('儿童智能学习桌椅宣传图生成.png')">
+        <img src="儿童智能学习桌椅宣传图生成.png" alt="欧科明智慧书桌 - 使用场景" loading="lazy">
+      </div>
+      <div class="gallery-item" onclick="openLightbox('第四次渲染.png')">
+        <img src="第四次渲染.png" alt="欧科明智慧书桌 - 家居场景" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta" id="cta">
+  <div class="section-inner">
+    <div class="cta-card">
+      <span class="section-label">立即行动</span>
+      <h2>给孩子一个光明的未来</h2>
+      <p>保护眼睛从娃娃抓起。欧科明预防近视家用智慧书桌，现已上市。</p>
+      <p style="color:var(--gray-600);font-size:0.9rem;">
+        型号 BSJ-S-001 | 整机保修2年 | 核心部件保修5年
+      </p>
+      <a href="#features" class="btn-primary">了解更多功能</a>
+      <div class="cta-contact">
+        <span style="color:var(--gray-600);">服务热线：</span>
+        <a href="tel:13549871995" class="cta-phone">13549871995</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h3>欧科明</h3>
+      <p>中山市百视吉健康科技有限公司旗下品牌，专注于儿童智能护眼学习装备研发与制造，致力于为6-18岁中小学生提供健康、高效、安全的学习环境。</p>
+    </div>
+    <div class="footer-col">
+      <h4>快速导航</h4>
+      <a href="#features">核心功能</a>
+      <a href="#specs">产品参数</a>
+      <a href="#gallery">产品图集</a>
+      <a href="#cta">联系我们</a>
+    </div>
+    <div class="footer-col">
+      <h4>联系方式</h4>
+      <a>电话：13549871995</a>
+      <a>地址：广东省中山市横栏镇永兴北路3号</a>
+      <a>制造商：中山市百视吉健康科技有限公司</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    &copy; 2026 欧科明（注册商标）保留所有权利 | 中山市百视吉健康科技有限公司
+  </div>
+</footer>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close">&times;</button>
+  <img src="" alt="" id="lightboxImg">
+</div>
+
+<script>
+  // Navigation scroll effect
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // Mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => navLinks.classList.remove('open'));
+  });
+
+  // Smooth scroll for all anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Lightbox
+  function openLightbox(src) {
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightbox').classList.add('active');
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+  }
+
+  // Intersection Observer for animation
+  const observerOptions = { threshold: 0.15, rootMargin: '0px 0px -40px 0px' };
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.animationPlayState = 'running';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.animate, .animate-delay-1, .animate-delay-2, .animate-delay-3, .animate-delay-4')
+    .forEach(el => { el.style.animationPlayState = 'paused'; observer.observe(el); });
+</script>
+
+</body>
+</html>
