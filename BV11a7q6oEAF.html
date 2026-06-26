@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>学习桌功能视频</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
+.container {
+  width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+  background: #000;
+}
+#player {
+  width: 100%; max-width: 450px; height: 100%;
+  border: none;
+}
+#fullscreen-btn {
+  position: absolute; bottom: 24px; right: 24px; z-index: 10;
+  width: 52px; height: 52px; border-radius: 50%;
+  background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.5);
+  color: #fff; font-size: 26px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+}
+#overlay {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 20; display: flex; align-items: center; justify-content: center;
+}
+#overlay button {
+  padding: 18px 56px; font-size: 22px; border: none; border-radius: 10px;
+  background: #fb7299; color: #fff; cursor: pointer; font-weight: bold;
+  -webkit-tap-highlight-color: transparent;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<iframe id="player"
+  src="https://player.bilibili.com/player.html?bvid=BV11a7q6oEAF&autoplay=0&danmaku=0&high_quality=1"
+  allow="autoplay; fullscreen" allowfullscreen>
+</iframe>
+</div>
+<button id="fullscreen-btn" onclick="goFullscreen()" title="全屏">&#x26F6;</button>
+<div id="overlay"><button onclick="startPlay()">点击播放</button></div>
+<script>
+function startPlay() {
+  document.getElementById('overlay').style.display = 'none';
+  document.getElementById('player').src =
+    'https://player.bilibili.com/player.html?bvid=BV11a7q6oEAF&autoplay=1&danmaku=0&high_quality=1';
+}
+function goFullscreen() {
+  const el = document.documentElement;
+  if (el.requestFullscreen) el.requestFullscreen();
+  else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+  else if (el.msRequestFullscreen) el.msRequestFullscreen();
+}
+</script>
+</body>
+</html>
