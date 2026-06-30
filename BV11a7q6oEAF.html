@@ -40,7 +40,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
 </iframe>
 </div>
 <div id="overlay">
-  <img id="cover-img" src="cover_BV11a7q6oEAF.jpg" alt="">
+  <img id="cover-img" src="https://i2.hdslb.com/bfs/archive/df2dfd29a548423ff490fe134cf7d57c4eb26e56.jpg" alt="">
   <div id="cover-mask"></div>
   <button id="play-btn" onclick="startPlay()">▶ 点击播放</button>
 </div>
@@ -49,7 +49,6 @@ function getPlayer() { return document.getElementById('player').contentWindow; }
 function startPlay() {
   document.getElementById('overlay').classList.add('hidden');
   var p = getPlayer();
-  // 播放 + 延迟全屏
   p.postMessage({"type": "player", "action": "play"}, '*');
   setTimeout(function() { p.postMessage({"type": "player", "action": "fullscreen"}, '*'); }, 1000);
 }
