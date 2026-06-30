@@ -7,7 +7,7 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
-.container { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #000; }
+container { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #000; }
 #player { width: 100%; max-width: 450px; height: 100%; border: none; }
 #fullscreen-btn {
   position: absolute; bottom: 24px; right: 24px; z-index: 10;
@@ -48,15 +48,16 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
 </div>
 <button id="fullscreen-btn" onclick="goFullscreen()" title="全屏">&#x26F6;</button>
 <div id="overlay">
-  <img id="cover-img" src="https://i2.hdslb.com/bfs/archive/df2dfd29a548423ff490fe134cf7d57c4eb26e56.jpg" alt="">
+  <img id="cover-img" src="cover_BV11a7q6oEAF.jpg" alt="">
   <div id="cover-mask"></div>
   <button id="play-btn" onclick="startPlay()">▶ 点击播放</button>
 </div>
 <script>
 function startPlay() {
   document.getElementById('overlay').classList.add('hidden');
-  document.getElementById('player').src =
-    'https://player.bilibili.com/player.html?bvid=BV11a7q6oEAF&autoplay=1&danmaku=0&high_quality=1';
+  document.getElementById('player').contentWindow.postMessage(
+    {"type": "player", "action": "play"}, '*'
+  );
 }
 function goFullscreen() {
   const el = document.documentElement;
