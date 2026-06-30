@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="referrer" content="origin">
 <title>普通台灯在高速相机下频闪</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -42,7 +43,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
 <body>
 <div class="container">
 <iframe id="player"
-  src="https://player.bilibili.com/player.html?bvid=BV1xYVd6NEwS&autoplay=0&danmaku=0&high_quality=1"
+  src="https://player.bilibili.com/player.html?bvid=BV1xYVd6NEwS&autoplay=0&danmaku=0&high_quality=1&as_wide=1"
   allow="autoplay; fullscreen" allowfullscreen>
 </iframe>
 </div>
@@ -57,7 +58,7 @@ function startPlay() {
   var p = document.getElementById('player').contentWindow;
   document.getElementById('overlay').classList.add('hidden');
   p.postMessage({"type": "player", "action": "play"}, '*');
-  setTimeout(function() { p.postMessage({"type": "quality", "value": 80}, '*'); }, 500);
+  setTimeout(function() { p.postMessage({"type": "quality", "value": 80}, '*'); }, 1000);
 }
 function goFullscreen() {
   var el = document.documentElement;
