@@ -10,14 +10,6 @@
 html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
 .container { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #000; }
 #player { width: 100%; max-width: 450px; height: 100%; border: none; }
-#fullscreen-btn {
-  position: absolute; bottom: 24px; right: 24px; z-index: 10;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.5);
-  color: #fff; font-size: 26px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  -webkit-tap-highlight-color: transparent;
-}
 #overlay {
   position: absolute; top: 0; left: 0; width: 100%; height: 100%;
   z-index: 20; display: flex; align-items: center; justify-content: center;
@@ -47,25 +39,22 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
   allow="autoplay; fullscreen" allowfullscreen>
 </iframe>
 </div>
-<button id="fullscreen-btn" onclick="goFullscreen()" title="全屏">&#x26F6;</button>
 <div id="overlay">
   <img id="cover-img" src="https://i1.hdslb.com/bfs/archive/3b00e016cf26f91ba8b4cf376efbc08bc81f2208.jpg" alt="">
   <div id="cover-mask"></div>
   <button id="play-btn" onclick="startPlay()">▶ 点击播放</button>
 </div>
 <script>
+function getPlayer() { return document.getElementById('player').contentWindow; }
 function startPlay() {
-  var p = document.getElementById('player').contentWindow;
   document.getElementById('overlay').classList.add('hidden');
-  p.postMessage({"type": "player", "action": "play"}, '*');
-  setTimeout(function() { p.postMessage({"type": "quality", "value": 80}, '*'); }, 1000);
+  getPlayer().postMessage({"type": "player", "action": "play"}, '*');
+  setTimeout(function() { getPlayer().postMessage({"type": "quality", "value": 80}, '*'); }, 1000);
 }
-function goFullscreen() {
-  var el = document.documentElement;
-  if (el.requestFullscreen) el.requestFullscreen();
-  else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
-  else if (el.msRequestFullscreen) el.msRequestFullscreen();
-}
+document.addEventListener('click', function(e) {
+  if (e.target.closest('#overlay')) return;
+  getPlayer().postMessage({"type": "player", "action": "fullscreen"}, '*');
+});
 </script>
 </body>
 </html>
