@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="referrer" content="origin">
+<title>欧科明-科学护眼书桌功能-环保讲解</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
+.container { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #000; }
+#player { width: 100%; max-width: 450px; height: 100%; border: none; }
+#overlay {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 20; display: flex; align-items: center; justify-content: center;
+  background: #000; transition: opacity 0.3s;
+}
+#overlay.hidden { opacity: 0; pointer-events: none; }
+#cover-img {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  object-fit: cover;
+}
+#cover-mask {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.3);
+}
+#play-btn {
+  position: relative; z-index: 1;
+  padding: 18px 56px; font-size: 22px; border: 2px solid #fff; border-radius: 10px;
+  background: rgba(251,114,153,0.85); color: #fff; cursor: pointer; font-weight: bold;
+  -webkit-tap-highlight-color: transparent;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<iframe id="player"
+  src="https://player.bilibili.com/player.html?bvid=BV16eTv6HEDU&autoplay=0&danmaku=0&high_quality=1&as_wide=1&quality=80&qn=80"
+  allow="autoplay; fullscreen" allowfullscreen>
+</iframe>
+</div>
+<div id="overlay">
+  <img id="cover-img" src="cover_BV16eTv6HEDU.jpg" alt="">
+  <div id="cover-mask"></div>
+  <button id="play-btn" onclick="startPlay()">▶ 点击播放</button>
+</div>
+<script>
+function getPlayer() { return document.getElementById('player').contentWindow; }
+function startPlay() {
+  document.getElementById('overlay').classList.add('hidden');
+  var p = getPlayer();
+  p.postMessage({"type": "player", "action": "play"}, '*');
+  setTimeout(function() { p.postMessage({"type": "player", "action": "fullscreen"}, '*'); }, 1000);
+}
+</script>
+</body>
+</html>
