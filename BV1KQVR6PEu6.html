@@ -35,7 +35,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
 <body>
 <div class="container">
 <iframe id="player"
-  src="https://player.bilibili.com/player.html?bvid=BV1KQVR6PEu6&autoplay=0&danmaku=0&high_quality=1&as_wide=1&quality=80&qn=80"
+  src="https://player.bilibili.com/player.html?bvid=BV1KQVR6PEu6&autoplay=0&danmaku=0&high_quality=1&as_wide=1"
   allow="autoplay; fullscreen" allowfullscreen>
 </iframe>
 </div>
@@ -50,7 +50,15 @@ function startPlay() {
   document.getElementById('overlay').classList.add('hidden');
   var p = getPlayer();
   p.postMessage({"type": "player", "action": "play"}, '*');
-  setTimeout(function() { p.postMessage({"type": "player", "action": "fullscreen"}, '*'); }, 1000);
+  setTimeout(function() { p.postMessage({"type": "player", "action": "fullscreen"}, '*'); }, 1500);
+  function set1080() {
+    p.postMessage({"type": "quality", "value": 80}, '*');
+    p.postMessage({"type": "setQuality", "value": 80}, '*');
+    p.postMessage({"type": "changeQuality", "value": 80}, '*');
+  }
+  setTimeout(set1080, 1000);
+  setTimeout(set1080, 3000);
+  setTimeout(set1080, 6000);
 }
 </script>
 </body>
